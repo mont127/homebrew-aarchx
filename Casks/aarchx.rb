@@ -18,9 +18,8 @@ cask "aarchx" do
 
   # ocerz is not notarized; Homebrew quarantines what it downloads, and
   # Gatekeeper would refuse the binary until the flag is gone.
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-dr", "com.apple.quarantine", "#{staged_path}/aarchx"]
+  postflight_steps do
+    run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{staged_path}}/aarchx"]
   end
 
   zap trash: "~/Library/Caches/ocerz"
