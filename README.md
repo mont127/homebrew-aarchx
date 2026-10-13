@@ -10,15 +10,16 @@ ocerz /Applications/Some.app
 ```
 
 The cask installs the prebuilt `ocerz` from the latest AArchX release, with
-the runtime files it reads, and links `ocerz` into Homebrew's `bin`.
+the runtime files it reads, links `ocerz` into Homebrew's `bin`, and puts
+AArchX.app, the window that runs programs without Terminal, in `/Applications`.
 
 AArchX is not notarized. Homebrew quarantines what it downloads, so the cask
 removes that flag after installing; otherwise Gatekeeper would refuse to run
-`ocerz`.
+`ocerz` and the app.
 
 `brew upgrade --cask aarchx` updates it. `brew uninstall --cask aarchx` removes
-it, and adding `--zap` also deletes the translation cache in
-`~/Library/Caches/ocerz`.
+it, and adding `--zap` also deletes the translation cache, the app's logs and its
+settings.
 
 Cache mode needs Rosetta installed, because Rosetta's package ships Apple's
 x86-64 shared cache. Native mode (`ocerz -native`) does not. See
