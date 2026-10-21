@@ -23,11 +23,13 @@ cask "aarchx" do
     run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{staged_path}}/aarchx"]
     run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/AArchX.app"]
     # The C++ and X11 libraries 32-bit games need, which no release carries:
-    # MacPorts' packages (about 15 MB), fetched into the staged runtime.
+    # MacPorts' packages (about 15 MB), fetched into the staged runtime, over
+    # Apple's TLS: macOS's curl defaults to LibreSSL, which still trusts the
+    # eMudhra intermediate CAs whose keys became public in October 2026.
     run "/bin/sh", args: ["-c", "'{{staged_path}}/aarchx/tools/fetch_guest32_cxx.sh' >/dev/null && " \
                                 "'{{staged_path}}/aarchx/tools/fetch_guest32_x11.sh' >/dev/null || " \
                                 "echo 'aarchx: the 32-bit runtimes could not be fetched; see the README'"],
-        network_access: true, print_stdout: true
+        env: { "CURL_SSL_BACKEND" => "secure-transport" }, network_access: true, print_stdout: true
   end
 
   zap trash: [
