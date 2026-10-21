@@ -26,7 +26,8 @@ cask "aarchx" do
     # MacPorts' packages (about 15 MB), fetched into the staged runtime.
     run "/bin/sh", args: ["-c", "'{{staged_path}}/aarchx/tools/fetch_guest32_cxx.sh' >/dev/null && " \
                                 "'{{staged_path}}/aarchx/tools/fetch_guest32_x11.sh' >/dev/null || " \
-                                "echo 'aarchx: the 32-bit runtimes could not be fetched; see the README'"]
+                                "echo 'aarchx: the 32-bit runtimes could not be fetched; see the README'"],
+        network_access: true, print_stdout: true
   end
 
   zap trash: [
