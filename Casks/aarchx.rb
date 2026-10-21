@@ -1,6 +1,6 @@
 cask "aarchx" do
-  version "0.8"
-  sha256 "961f1346ba6004c839ac56c0836fb3fadadbffb1827fb0611807420f0e85bcdc"
+  version "0.9"
+  sha256 "305d0cd1617daf301d58534f48e92c816ba64682cb2d4297c3e4372d8d7aa135"
 
   url "https://github.com/mont127/AArchX/releases/download/v#{version}/aarchx-macos-arm64.tar.gz"
   name "AArchX"
@@ -22,6 +22,11 @@ cask "aarchx" do
   postflight_steps do
     run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{staged_path}}/aarchx"]
     run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/AArchX.app"]
+    # The C++ and X11 libraries 32-bit games need, which no release carries:
+    # MacPorts' packages (about 15 MB), fetched into the staged runtime.
+    run "/bin/sh", args: ["-c", "'{{staged_path}}/aarchx/tools/fetch_guest32_cxx.sh' >/dev/null && " \
+                                "'{{staged_path}}/aarchx/tools/fetch_guest32_x11.sh' >/dev/null || " \
+                                "echo 'aarchx: the 32-bit runtimes could not be fetched; see the README'"]
   end
 
   zap trash: [
