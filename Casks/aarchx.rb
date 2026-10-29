@@ -1,6 +1,6 @@
 cask "aarchx" do
-  version "1.0.1"
-  sha256 "5020250c5151395f22b6f56170c026244a01bdb96cf09f088116bcd9c03c1cba"
+  version "1.0.2"
+  sha256 "765c147e7c06a356bb9bf14b9bc04441e9f1016b8f4966a0513cdd214364e371"
 
   url "https://github.com/mont127/AArchX/releases/download/v#{version}/aarchx-macos-arm64.tar.gz"
   name "AArchX"
